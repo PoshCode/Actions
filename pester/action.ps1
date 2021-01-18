@@ -28,6 +28,7 @@ $Options = @{
     OutputFormat = "NUnitXml"
     OutputFile   = 'results.xml'
     Show         = $Show
+    EnableExit   = $true
 }
 
 if ($CodeCoverage = $CodeCoveragePath) {
