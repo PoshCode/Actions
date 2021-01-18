@@ -30,15 +30,15 @@ async function main() {
         const os = (process.env['RUNNER_OS'] || process.env['OS'] || process.env['ImageOS'] || '')
         var key = [os, 'psmodules', hash.trim()].join('-')
         core.info("Restore: '" + psModulePath + "' from cache: " + key)
-        const cacheKey = await restore([psModulePath], key)
+        var cacheKey = await restore([psModulePath], key)
         if (cacheKey) {
             core.info("Cache hit: " + cacheKey)
         } else {
             const command = path.resolve(__dirname, 'Install-RequiredModule.ps1')
             core.info("PS> " + command + " -RequiredModulesFile " + requiredModules)
             core.info(execFileSync('pwsh', ['-noprofile', '-nologo', '-noninteractive', '-file', command, '-RequiredModulesFile', requiredModules, '-TrustRegisteredRepositories', '-Scope', 'CurrentUser']))
-            const cache = await cache.saveCache([psModulePath], key)
-            core.info("New cache [" + cache + "] for: " + psModulePath)
+            cacheKey = await cache.saveCache([psModulePath], key)
+            core.info("New cache [" + cacheKey + "] for: " + psModulePath)
         }
     } catch (error) {
         core.setFailed(error.message)
