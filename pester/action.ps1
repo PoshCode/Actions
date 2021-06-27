@@ -57,7 +57,9 @@ if ($AdditionalModulePaths) {
 }
 
 if ($ModuleUnderTest) {
-    Remove-Module $ModuleUnderTest -Force -ErrorAction Ignore
+    # Pester's mocks won't work if there's another module with the same name...
+    # Even if it's privately nested! To remove private nested modules:
+    Get-Module $ModuleUnderTest -All | Remove-Module -Force -ErrorAction Ignore
     if ($ModuleVersion) {
         Import-Module $ModuleUnderTest -RequiredVersion $ModuleVersion
     } else {
@@ -68,9 +70,13 @@ if ($ModuleUnderTest) {
     }
 }
 
-@($Modules) + @(Get-Module) | Out-String | Write-Verbose -Verbose
+# Make sure we can see ALL the loaded modules
+@($Modules) + @(Get-Module -All) |
+    Format-List Name, Version, Path, Description |
+    Out-String |
+    Write-Verbose -Verbose
 
-Write-Host $([PSCustomObject]$Options | Out-String)
+Write-Host "Pester Options:`n$([PSCustomObject]$Options | Out-String)`n========================="
 if (!$PSVersionTable.OS) {
     $PSVersionTable.OS = [System.Environment]::OSVersion
 }
