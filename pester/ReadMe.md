@@ -29,7 +29,7 @@ Runs Invoke-Pester or Invoke-Gherkin depending on whether there are .tests.ps1 o
 
 ## Usage
 
-For basic usage: use two jobs, one for build and one for .\Test.ps1
+For basic usage: use two jobs, one for build and one for test
 
 At the end of the **build** job, use `actions/upload-artifact` to publish:
 
@@ -62,7 +62,7 @@ Then add a **test** job, and use `actions/download-artifact` to download all of 
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-16.04, ubuntu-18.04, windows-2016, macos-latest]
+        os: [windows-latest, ubuntu-latest, windows-2016, macos-latest]
     needs: build
     steps:
       - name: Download Build Output

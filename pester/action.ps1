@@ -13,14 +13,16 @@ param(
     [string]$TestRunTitle = "Pester",
     [string]$Show = "All"
 )
+# Just so we can see what happened
+$PSBoundParameters | Out-String | Write-Verbose -Verbose
 
 if ($PesterVersion) {
-    & $PSScriptRoot\Install-RequiredModule @{ "Pester" = $PesterVersion } -TrustRegisteredRepositories
+    & $PSScriptRoot/Install-RequiredModule @{ "Pester" = $PesterVersion } -TrustRegisteredRepositories
     Import-Module Pester -RequiredVersion $PesterVersion
 } elseif (Test-Path RequiredModules.psd1) {
-    & $PSScriptRoot\Install-RequiredModule -RequiredModulesFile RequiredModules.psd1 -TrustRegisteredRepositories -Import
-} elseif (Test-Path RequiredModules\RequiredModules.psd1) {
-    & $PSScriptRoot\Install-RequiredModule -RequiredModulesFile RequiredModules\RequiredModules.psd1 -TrustRegisteredRepositories -Import
+    & $PSScriptRoot/Install-RequiredModule -RequiredModulesFile RequiredModules.psd1 -TrustRegisteredRepositories -Import
+} elseif (Test-Path RequiredModules/RequiredModules.psd1) {
+    & $PSScriptRoot/Install-RequiredModule -RequiredModulesFile RequiredModules/RequiredModules.psd1 -TrustRegisteredRepositories -Import
 }
 
 $Options = @{
