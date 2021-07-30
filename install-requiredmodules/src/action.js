@@ -25,7 +25,7 @@ async function main() {
         ].filter(file => fs.existsSync(file))[0]
 
         const hash = String(execFileSync('pwsh', ['-noprofile', '-nologo', '-noninteractive', '-command', '$(Get-FileHash "' + requiredModules + '").Hash'])).trim()
-        const psModulePath = String(execFileSync('pwsh', ['-noprofile', '-nologo', '-noninteractive', '-command', '$Env:PSModulePath.Split([IO.Path]::PathSeparator).Where({$_.StartsWith((Split-Path $profile.CurrentUserAllHosts))})'])).trim()
+        const psModulePath = String(execFileSync('pwsh', ['-noprofile', '-nologo', '-noninteractive', '-command', '$Env:PSModulePath.Split([IO.Path]::PathSeparator).Where({$_.StartsWith($Home)})'])).trim()
 
         const os = (process.env['RUNNER_OS'] || process.env['OS'] || process.env['ImageOS'] || '')
         var key = [os, 'psmodules', hash.trim()].join('-')
