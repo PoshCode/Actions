@@ -15,14 +15,15 @@ param(
 )
 # Just so we can see what happened
 $PSBoundParameters | Out-String | Write-Verbose -Verbose
+Write-Verbose "Working Directory: $pwd"
 
 if ($PesterVersion) {
     & $PSScriptRoot/Install-RequiredModule @{ "Pester" = $PesterVersion } -TrustRegisteredRepositories
     Import-Module Pester -RequiredVersion $PesterVersion
-} elseif (Test-Path RequiredModules.psd1) {
-    & $PSScriptRoot/Install-RequiredModule -RequiredModulesFile RequiredModules.psd1 -TrustRegisteredRepositories -Import
-} elseif (Test-Path RequiredModules/RequiredModules.psd1) {
-    & $PSScriptRoot/Install-RequiredModule -RequiredModulesFile RequiredModules/RequiredModules.psd1 -TrustRegisteredRepositories -Import
+# } elseif (Test-Path RequiredModules.psd1) {
+#     & $PSScriptRoot/Install-RequiredModule -RequiredModulesFile RequiredModules.psd1 -TrustRegisteredRepositories -Import
+# } elseif (Test-Path RequiredModules/RequiredModules.psd1) {
+#     & $PSScriptRoot/Install-RequiredModule -RequiredModulesFile RequiredModules/RequiredModules.psd1 -TrustRegisteredRepositories -Import
 }
 
 $Options = @{
