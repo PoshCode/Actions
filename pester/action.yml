@@ -7,6 +7,10 @@ inputs:
   pesterVersion:
     description: If you need a specific version of Pester. By default looks for RequiredModules.psd1 (or RequiredModules/RequiredModules.psd1)
     required: false
+  shell:
+    description: The PowerShell version your tests will run on.
+    required: false
+    default: "pwsh"
   testsDirectory:
     description: The path to the folder where your tests are. By default looks for *Tests* (e.g. PesterTests).
     required: false
@@ -38,4 +42,4 @@ runs:
   steps:
     - id: pester
       run: ${{ github.action_path }}/action.ps1 -PesterVersion '${{ inputs.pesterVersion }}' -ModuleUnderTest '${{ inputs.moduleUnderTest }}' -ModuleVersion '${{ inputs.moduleVersion }}' -TestsDirectory '${{ inputs.testsDirectory }}' -IncludeTag '${{ inputs.includeTag }}' -ExcludeTag '${{ inputs.excludeTag }}' -AdditionalModulePaths '${{ inputs.additionalModulePaths }}' -CodeCoveragePath '${{ inputs.codeCoveragePath }}'
-      shell: pwsh
+      shell: ${{ inputs.shell }}
