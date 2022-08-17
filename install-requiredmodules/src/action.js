@@ -27,7 +27,7 @@ async function main() {
         const hash = String(execFileSync('pwsh', ['-noprofile', '-nologo', '-noninteractive', '-command', '$(Get-FileHash "' + requiredModules + '").Hash'])).trim()
         const psModulePath = String(execFileSync('pwsh', ['-noprofile', '-nologo', '-noninteractive', '-command', '$Env:PSModulePath.Split([IO.Path]::PathSeparator).Where({$_.StartsWith($Home)})'])).trim()
 
-        const os = (process.env['RUNNER_OS'] || process.env['OS'] || process.env['ImageOS'] || '')
+        const os = (process.env['ImageOS'] || process.env['RUNNER_OS'] || process.env['OS'] || '')
         var key = [os, 'psmodules', hash.trim()].join('-')
         core.info("Restore: '" + psModulePath + "' from cache: " + key)
         var cacheKey = await restore([psModulePath], key)
