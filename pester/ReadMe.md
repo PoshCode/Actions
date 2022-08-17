@@ -9,8 +9,12 @@ Runs Invoke-Pester or Invoke-Gherkin depending on whether there are .tests.ps1 o
     - required: false
     - default: "*[Tt]est*"
 ### pesterVersion:
-    -  If you need a specific version of Pester (default is what's on your PSModulePath)
+    - If you need a specific version of Pester (default is what's on your PSModulePath)
     - required: false
+### shell:
+    - If you need a specific version of Powershell (default is `pwsh`)
+    - required: false
+    - default: "pwsh"
 ### includeTag:
     - If you want to only run some of your tests, a comma-separated list of tags
     - required: false
