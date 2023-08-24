@@ -14,5 +14,5 @@ $ofs = "`n"
 Write-Verbose $gitversion -Verbose
 
 (ConvertFrom-Json -InputObject $gitversion -AsHashtable).GetEnumerator().ForEach{
-    "::set-output name=$($_.Key)::$($_.Value)"
+    "$($_.Key)=$($_.Value)" >> $ENV:GITHUB_OUTPUT
 }

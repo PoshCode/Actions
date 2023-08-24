@@ -24,7 +24,7 @@ $Modules = @(
 )
 
 $ModuleInfo = $Modules | Select-Object Name, Path, ModuleBase | ConvertTo-Json -Compress
-Write-Host "::set-output name=moduleinfo::$ModuleInfo"
+"moduleinfo=$ModuleInfo" >> $ENV:GITHUB_OUTPUT
 
 trap {
     $_ | Format-List | Out-Host
